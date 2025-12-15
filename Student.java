@@ -2,11 +2,11 @@
 public class Student {
     
     private String name;
-    private int id;
+    private String id;
     private String department;
     private int age;
     
-    public Student(String name, int id, String department, int age) {
+    public Student(String name, String id, String department, int age) {
         this.name = name;
         this.id = id;
         this.department = department;
@@ -16,8 +16,8 @@ public class Student {
     public String getName() {
         return name;
     }
-    
-    public int getId() {
+
+    public String getId() {
         return id;
     }
     

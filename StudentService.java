@@ -22,9 +22,9 @@ public class StudentService {
     }
     
     // Fetch a student by their ID. Returns null if not found.
-    public Student getStudentById(int id) {
+    public Student getStudentById(String id) {
         for (Student s : students) {
-            if (s.getId() == id) {
+            if (s.getId().equals(id)) {
                 return s;
             }
         }
@@ -32,7 +32,7 @@ public class StudentService {
     }
 
     // Convenience method to print a single student's details by id
-    public void displayStudentById(int id) {
+    public void displayStudentById(String id) {
         Student s = getStudentById(id);
         if (s == null) {
             System.out.println("Student with ID " + id + " not found.");
@@ -44,7 +44,7 @@ public class StudentService {
         System.out.println("student Age: "+ s.getAge());
     }
 
-    public Student UpdateById(int id,Student newstudent){
+    public Student UpdateById(String id,Student newstudent){
         Student oldstudent = getStudentById(id);
         if(oldstudent != null){
             oldstudent.setName(newstudent.getName());
@@ -57,7 +57,7 @@ public class StudentService {
         }
 
     }
-    public void DeleteById(int id){
+    public void DeleteById(String id){
         Student student = getStudentById(id);
         if(student != null){
             students.remove(student);
@@ -68,4 +68,5 @@ public class StudentService {
         }
 
     }
+
 }
