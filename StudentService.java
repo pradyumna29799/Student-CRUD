@@ -5,7 +5,7 @@ import java.util.List;
 public class StudentService {
     
     // Method to display student details
-    private List<Student> students = new ArrayList<>();
+    private final List<Student> students = new ArrayList<>();
 
     public void AddStudent(Student student){
         students.add(student);
@@ -25,7 +25,7 @@ public class StudentService {
     public Student getStudentById(String id) {
         for (Student s : students) {
             if (s.getId().equals(id)) {
-                return s;
+                  return s;
             }
         }
         return null;
@@ -44,7 +44,7 @@ public class StudentService {
         System.out.println("student Age: "+ s.getAge());
     }
 
-    public Student UpdateById(String id,Student newstudent){
+    public Student UpdateById(String id, Student newstudent){
         Student oldstudent = getStudentById(id);
         if(oldstudent != null){
             oldstudent.setName(newstudent.getName());

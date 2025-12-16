@@ -19,7 +19,8 @@ A minimal command-line Student Management System implemented in Java.
 ## Requirements
 
 - Java 21 LTS installed (JDK 21)
-- `javac` and `java` available on PATH, or `JAVA_HOME` set to a JDK 21 installation
+- MySQL Server installed and running
+- MySQL JDBC Driver (`mysql-connector-java-8.0.33.jar` or similar)
 
 ### Why Java 21
 
@@ -48,14 +49,61 @@ Both should report a `21` version.
 
 ## Build and Run (Windows)
 
-From the project root (`c:\Pradyumna\Java\Student-CRUD`) run:
+### 1. Set up MySQL Database
 
-```powershell
-javac Main.java Student.java StudentService.java
-java Main
+1. Open MySQL command line or MySQL Workbench.
+2. Run the SQL commands in [schema.sql](schema.sql) to create the database and table:
+
+```sql
+CREATE DATABASE IF NOT EXISTS student_crud;
+USE student_crud;
+CREATE TABLE IF NOT EXISTS students (
+    id VARCHAR(50) PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    department VARCHAR(100) NOT NULL,
+    age INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 ```
 
-This compiles the three `.java` files and runs the `Main` menu-driven program.
+3. Verify the database is created:
+
+```sql
+SHOW DATABASES;
+USE student_crud;
+SHOW TABLES;
+```
+
+### 2. Download and Add MySQL JDBC Driver
+
+1. Download `mysql-connector-java-8.0.33.jar` (or later) from [MySQL official site](https://dev.mysql.com/downloads/connector/j/).
+2. Place the JAR file in your project directory or add it to your classpath.
+
+### 3. Configure Database Connection
+
+Edit [DatabaseConfig.java](DatabaseConfig.java) to match your MySQL setup:
+
+```java
+private static final String DB_URL = "jdbc:mysql://localhost:3306/student_crud";
+private static final String DB_USER = "root";
+private static final String DB_PASSWORD = "";  // Add your password if set
+```
+
+### 4. Compile and Run
+
+From the project root, compile with the MySQL JDBC driver in the classpath:
+
+```powershell
+javac -cp "mysql-connector-java-8.0.33.jar" Main.java Student.java StudentService.java DatabaseConfig.java
+java -cp ".;mysql-connector-java-8.0.33.jar" Main
+```
+
+Or if you have the MySQL driver in your classpath, simply:
+
+```powershell
+javac *.java
+java Main
+```
 
 ## Usage
 
@@ -87,14 +135,10 @@ Notes:
 
 ## Implementation Notes
 
-- `Student` fields: `name` (String), `id` (String), `department` (String), `age` (int)
-- `StudentService` methods include `AddStudent`, `display_all`, `getStudentById`, `displayStudentById`, `UpdateById`, and `DeleteById`.
-
-## Next steps / Improvements
-
-- Persist students to a file or simple database for durability.
-- Add input validation (numeric age, non-empty fields).
-- Add unit tests and a build tool (Maven/Gradle) for easier dependency and Java version management.
+- `Student` class: data model with `name`, `id`, `department`, `age` fields.
+- `StudentService` class: uses JDBC to interact with MySQL database. Methods: `AddStudent`, `display_all`, `getStudentById`, `displayStudentById`, `UpdateById`, `DeleteById`.
+- `DatabaseConfig` class: manages MySQL connections and loads the JDBC driver.
+- Data is persisted in MySQL; no in-memory loss between sessions.
 
 ## Contributing
 

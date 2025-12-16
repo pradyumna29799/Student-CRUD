@@ -19,7 +19,7 @@ public class Main {
             int choice =  sc.nextInt();
             sc.nextLine();
             switch (choice) {
-                case 1:
+                case 1 -> {
                     System.out.println("Enter Student ID: ");
                     String id =  sc.nextLine();
                     System.out.println("Enter Student name: ");
@@ -30,23 +30,22 @@ public class Main {
                     int age =  sc.nextInt();
                     sc.nextLine();
                     // create Student object and add to service
-                    Student s = new Student(name, id, department, age);
+                    Student s = new Student(id,name, department, age);
                     studentService.AddStudent(s);
-                    break;
-                case 2:
+                }
+                case 2 -> {
                     System.out.println("Enter student ID to fetch: ");
                     String fetchId = sc.nextLine();
-                    sc.nextLine();
                     if (fetchId != null && !fetchId.isEmpty()) {
                         studentService.displayStudentById(fetchId);
-                    }   break;
-                case 3:
+                    }
+                }
+                case 3 -> {
                     System.out.println("Enter student ID to delete: ");
                     String deleteId = sc.nextLine();
-                    //sc.nextLine();
                     studentService.DeleteById(deleteId);
-                    break;
-                case 4:
+                }
+                case 4 -> {
                     System.out.println("Enter student ID to update: ");
                     String updateId = sc.nextLine();
                     if (studentService.getStudentById(updateId) == null) {
@@ -60,21 +59,22 @@ public class Main {
                     System.out.println("Enter new Student Age: ");
                     int newAge =  sc.nextInt();
                     sc.nextLine();
-                    Student newstudent = new Student(newName, updateId, newDepartment, newAge);
+                    Student newstudent = new Student(updateId, newName, newDepartment, newAge);
                     Student updatedStudent = studentService.UpdateById(updateId, newstudent);
                     if (updatedStudent != null) {
                         System.out.println("Student updated successfully.");
                     } else {
                         System.out.println("Student with ID " + updateId + " not found.");
-                    }   break;
-                case 5:
-                    studentService.display_all();
-                    break;
-                case 6:
+                    }
+                }
+                case 5 -> studentService.display_all();
+                case 6 -> {
                     System.out.println("Exiting...");
                     break OUTER;
-                default:
+                }
+                default -> {
                     break OUTER;
+                }
             }
         }       
         sc.close();
@@ -82,5 +82,3 @@ public class Main {
     }
     
 }
-
-

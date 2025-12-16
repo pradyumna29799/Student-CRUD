@@ -6,7 +6,9 @@ public class Student {
     private String department;
     private int age;
     
-    public Student(String name, String id, String department, int age) {
+    
+    // Constructor without ID (for new students, ID will be auto-generated)
+    public Student(String id, String name, String department, int age) {
         this.name = name;
         this.id = id;
         this.department = department;
@@ -19,6 +21,10 @@ public class Student {
 
     public String getId() {
         return id;
+    }
+    
+    public void setId(String id) {
+        this.id = id;
     }
     
     public String getDepartment() {
